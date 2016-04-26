@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -18,7 +20,7 @@ public class ClickFest extends Application {
 	double kõrgus = 500;
 	double diameeter = 40;
 	int[] i = {0,1,2,3,4,5,6,7,8,9};
-	
+	int nr = (int)(Math.random()*10);
 	@Override
 	public void start(Stage peaLava) {
 		
@@ -26,38 +28,66 @@ public class ClickFest extends Application {
 		BorderPane juur = new BorderPane();
 		Group grupp = new Group();
 		juur.getChildren().add(grupp);
-		Scene stseen = new Scene(juur, laius, kõrgus, Color.TRANSPARENT);
+		Scene stseen = new Scene(juur, laius, kõrgus, Color.WHITE);
 		peaLava.setScene(stseen);
 		
-		Circle ring1 = new Circle((int)(Math.random()*laius-diameeter), (int)(Math.random()*kõrgus-diameeter), diameeter, Color.BLUE);
+		// esimesel korral kasutatavad koordinaadid
+		double x1 = (int)(Math.random()*(laius));
+		double y1 = (int)(Math.random()*(kõrgus));
+		
+		Circle ring1 = new Circle(diameeter, Color.RED);
+
+		
+		// tekst ringi sisse
+		Text tekst = new Text (Integer.toString(nr));
+		tekst.setStroke(Color.BLUE);
+		tekst.setFont(new Font(30));
 		
 		// klikkimisel paigutab ringi uude kohta
-		// paigutamisel läheb stseeni piiridest siiski välja, koordinaatide alguspunkt on ähmane.
+		// koordinaatide x2 ja y2 puhul alguspunktiks x1 ja y1
 		ring1.setOnMouseClicked(event -> {
 			//ring1.setFill(Color.BLACK);
-			double x = (int)(Math.random()*(laius));
-			double y = (int)(Math.random()*(kõrgus));
-			System.out.println("x: " + x);
-			System.out.println("y: " + y);
-			ring1.setLayoutX(x);
-			ring1.setLayoutY(y);
+			double x2 = (int)(Math.random()*(laius));
+			double y2 = (int)(Math.random()*(kõrgus));
+			System.out.println("x: " + x2);
+			System.out.println("y: " + y2);
+			
+			// uus number vana asemele - ei tööta
+			nr = (int)(Math.random()*10);
+			ring1.setLayoutX(x2);
+			ring1.setLayoutY(y2);
+			tekst.setLayoutX(x2);
+			tekst.setLayoutY(y2);
 			});
-
-		Text number = new Text(Double.toString(Math.round(Math.random()*10)));
-		number.setFont(new Font(30));
 		
-		juur.getChildren().add(ring1);
+		//peab toimima ka tekstile klikkides
+		tekst.setOnMouseClicked(event -> {
+			//ring1.setFill(Color.BLACK);
+			double x2 = (int)(Math.random()*(laius));
+			double y2 = (int)(Math.random()*(kõrgus));
+			System.out.println("x: " + x2);
+			System.out.println("y: " + y2);
+
+			// uus number vana asemele - ei tööta
+			nr = (int)(Math.random()*10);
+			ring1.setLayoutX(x2);
+			ring1.setLayoutY(y2);
+			tekst.setLayoutX(x2);
+			tekst.setLayoutY(y2);
+			});
+		
+		juur.getChildren().addAll(ring1, tekst);
+		juur.setLayoutX(0);
+		juur.setLayoutY(0);
 		peaLava.setTitle("-=ClickFest=- by Lään & Raime");
 		peaLava.setResizable(true);
 		peaLava.show();
-		
 	}
 
 	public static void main(String[] args) {
 		launch(args);
 	}
 
-	@Override
 	public void handle(ActionEvent event) {
 	}
 }
