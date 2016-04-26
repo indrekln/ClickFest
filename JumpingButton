@@ -1,0 +1,48 @@
+import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+public class JumpingButton extends Application {
+	
+	public void start(Stage peaLava) {
+		
+		Group juur = new Group();
+		//BorderPane piiriPaan1 = new BorderPane();
+    	//piiriPaan1.setMinWidth(500);
+    	//piiriPaan1.setMinHeight(500);
+
+		Button nupp1 = new Button("N");
+		nupp1.setLayoutX(50);
+    	nupp1.setLayoutY(50);
+    	nupp1.setStyle("-fx-base: black;");
+    	nupp1.setTextFill(Color.WHITE);
+        nupp1.resize(50,50);
+        juur.getChildren().addAll(nupp1);
+    	
+    
+    	Scene stseen1 = new Scene(juur, 500,500);
+		peaLava.setTitle("Hüppav nupp");
+		peaLava.setScene(stseen1);
+		peaLava.show();
+		
+		nupp1.setOnMouseEntered(new EventHandler<MouseEvent>() {
+	      	  public void handle(MouseEvent me) {
+	      		  double x = stseen1.getWidth();
+	      		  double y = stseen1.getHeight();
+	      		  //System.out.println(x);
+	      		  //System.out.println(y);
+	      		  nupp1.setLayoutX((int)Math.round(Math.random()*(x-50)));
+	      		  nupp1.setLayoutY((int)Math.round(Math.random()*(y-50)));
+	      	  }
+	    	});
+	}
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
+}
