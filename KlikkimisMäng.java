@@ -22,6 +22,24 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
+/*
+ * Juur
+ * -Vbox
+ * --Nupp
+ * --TimerLabel
+ * -Ringid
+ * --Stackpane1
+ * ---Ring1
+ * ---Text1
+ * --Stackpane2
+ * ---Ring2
+ * ---Text2
+ * --Stackpane3
+ * ---Ring3
+ * ---Text3
+ * -Text4(?)
+ */
+ 
 public class KlikkimisMäng extends Application {
 	
 	private static final Integer STARTTIME = 10;
