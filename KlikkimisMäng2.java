@@ -172,31 +172,52 @@ public class KlikkimisMäng2 extends Application {
 
 		//ringide ümberpaigutamine hiirega klikates, tuleks erialdi klass teha, et ei kordaks tegevust
 		//punane ring
-//		stack1.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//			public void handle(MouseEvent me) {
-//				double x = stseen1.getWidth();
-//				double y = stseen1.getHeight();
-//				stack1.setLayoutX((int)Math.round(Math.random()*(x-50)));
-//				stack1.setLayoutY((int)Math.round(Math.random()*(y-50)));
-//				ring1.setRadius((Math.round(Math.random()*100+2)));
-//				int väärtus1 = 104-(int)ring1.getRadius();
-//				text1.setText(String.valueOf(väärtus1));
-//				stack2.setLayoutX((int)Math.round(Math.random()*(x-50)));
-//				stack2.setLayoutY((int)Math.round(Math.random()*(y-50)));
-//				ring2.setRadius((Math.round(Math.random()*100+2)));
-//				int väärtus2 = 104-(int)ring2.getRadius();
-//				text2.setText(String.valueOf(väärtus2));
-//				stack3.setLayoutX((int)Math.round(Math.random()*(x-50)));
-//				stack3.setLayoutY((int)Math.round(Math.random()*(y-50)));
-//				ring3.setRadius((Math.round(Math.random()*100+2)));
-//				int väärtus3 = 104-(int)ring3.getRadius();
-//				text3.setText(String.valueOf(väärtus3));
-//				points+=väärtus1;
-//				
-//				// punktiarvestus ei toimi õigesti
-//				score.set(points);
-//			}
-//		});
+		stack1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent me) {
+				double x = stseen1.getWidth();
+				double y = stseen1.getHeight();
+				int x1 = (int)Math.round(Math.random()*(x-50));
+				int y1 = (int)Math.round(Math.random()*(y-50));
+				int r1 = (int)(Math.round(Math.random()*100+2));
+				int x2 = (int)Math.round(Math.random()*(x-50));
+				int y2 = (int)Math.round(Math.random()*(y-50));
+				int r2 = (int)(Math.round(Math.random()*100+2));
+				int x3 = (int)Math.round(Math.random()*(x-50));
+				int y3 = (int)Math.round(Math.random()*(y-50));
+				int r3 = (int)(Math.round(Math.random()*100+2));
+				
+				// ringide kattuvuse vältimine 
+				while (Math.sqrt((x2+r2-x1-r1)*(x2+r2-x1-r1)+(y2+r2-y1-r1)*(y2+r2-y1-r1)) < r1+r2 || 
+						Math.sqrt((x3+r3-x1-r1)*(x3+r3-x1-r1)+(y3+r3-y1-r1)*(y3+r3-y1-r1)) < r1+r3 || 
+						Math.sqrt((x3+r3-x2-r2)*(x3+r3-x2-r2)+(y3+r3-y2-r2)*(y3+r3-y2-r2)) < r2+r3){
+					x2 = (int)Math.round(Math.random()*(x-50));
+					y2 = (int)Math.round(Math.random()*(y-50));
+					r2 = (int)(Math.round(Math.random()*100+2));
+					x3 = (int)Math.round(Math.random()*(x-50));
+					y3 = (int)Math.round(Math.random()*(y-50));
+					r3 = (int)(Math.round(Math.random()*100+2));
+				}
+				stack1.setLayoutX(x1);
+				stack1.setLayoutY(y1);
+				ring1.setRadius(r1);
+				int väärtus1 = 104-r1;
+				text1.setText(String.valueOf(väärtus1));
+				stack2.setLayoutX(x2);
+				stack2.setLayoutY(y2);
+				ring2.setRadius(r2);
+				int väärtus2 = 104-r2;
+				text2.setText(String.valueOf(väärtus2));
+				stack3.setLayoutX(x3);
+				stack3.setLayoutY(y3);
+				ring3.setRadius(r3);
+				int väärtus3 = 104-r3;
+				text3.setText(String.valueOf(väärtus3));
+				points+=väärtus1;
+				
+				// punktiarvestus ei toimi õigesti
+				score.set(points);
+			}
+		});
 
 		//kollane ring
 		stack2.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -204,26 +225,26 @@ public class KlikkimisMäng2 extends Application {
 				double x = stseen1.getWidth();
 				double y = stseen1.getHeight();
 				int x1 = (int)Math.round(Math.random()*(x-50));
-				int y1 = (int)Math.round(Math.random()*(x-50));
+				int y1 = (int)Math.round(Math.random()*(y-50));
 				int r1 = (int)(Math.round(Math.random()*100+2));
 				int x2 = (int)Math.round(Math.random()*(x-50));
-				int y2 = (int)Math.round(Math.random()*(x-50));
+				int y2 = (int)Math.round(Math.random()*(y-50));
 				int r2 = (int)(Math.round(Math.random()*100+2));
 				int x3 = (int)Math.round(Math.random()*(x-50));
-				int y3 = (int)Math.round(Math.random()*(x-50));
+				int y3 = (int)Math.round(Math.random()*(y-50));
 				int r3 = (int)(Math.round(Math.random()*100+2));
 				
-				// kattuvuse vältimise katsetud
-				System.out.println("x " + x1 + " " + x2 + " " + x3 + " y " + y1 + " " + y2 + " " + y3 + " r " + r1 + " " + r2 + " " + r3);
-				while ((x1+x2)/2 < r1+r2 && (y1+y2)/2 < r1+r2 && (x1+x3)/2 < r1+r3 && (y1+y3)/2 < r1+r3 && (x3+x2)/2 < r3+r2 && (y3+y2)/2 < r3+r2){
+				// ringide kattuvuse vältimine
+				while (Math.sqrt((x2+r2-x1-r1)*(x2+r2-x1-r1)+(y2+r2-y1-r1)*(y2+r2-y1-r1)) < r1+r2 || 
+						Math.sqrt((x3+r3-x1-r1)*(x3+r3-x1-r1)+(y3+r3-y1-r1)*(y3+r3-y1-r1)) < r1+r3 || 
+						Math.sqrt((x3+r3-x2-r2)*(x3+r3-x2-r2)+(y3+r3-y2-r2)*(y3+r3-y2-r2)) < r2+r3){
 					x2 = (int)Math.round(Math.random()*(x-50));
-					y2 = (int)Math.round(Math.random()*(x-50));
+					y2 = (int)Math.round(Math.random()*(y-50));
 					r2 = (int)(Math.round(Math.random()*100+2));
 					x3 = (int)Math.round(Math.random()*(x-50));
-					y3 = (int)Math.round(Math.random()*(x-50));
+					y3 = (int)Math.round(Math.random()*(y-50));
 					r3 = (int)(Math.round(Math.random()*100+2));
 				}
-				System.out.println("x " + x1 + " " + x2 + " " + x3 + " y " + y1 + " " + y2 + " " + y3 + " r " + r1 + " " + r2 + " " + r3);
 				stack1.setLayoutX(x1);
 				stack1.setLayoutY(y1);
 				ring1.setRadius(r1);
@@ -245,29 +266,50 @@ public class KlikkimisMäng2 extends Application {
 		});
 
 		//roheline ring
-//		stack3.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//			public void handle(MouseEvent me) {
-//				double x = stseen1.getWidth();
-//				double y = stseen1.getHeight();
-//				stack1.setLayoutX((int)Math.round(Math.random()*(x-50)));
-//				stack1.setLayoutY((int)Math.round(Math.random()*(y-50)));
-//				ring1.setRadius((Math.round(Math.random()*100+2)));
-//				int väärtus1 = 104-(int)ring1.getRadius();
-//				text1.setText(String.valueOf(väärtus1));
-//				stack2.setLayoutX((int)Math.round(Math.random()*(x-50)));
-//				stack2.setLayoutY((int)Math.round(Math.random()*(y-50)));
-//				ring2.setRadius((Math.round(Math.random()*100+2)));
-//				int väärtus2 = 104-(int)ring2.getRadius();
-//				text2.setText(String.valueOf(väärtus2));
-//				stack3.setLayoutX((int)Math.round(Math.random()*(x-50)));
-//				stack3.setLayoutY((int)Math.round(Math.random()*(y-50)));
-//				ring3.setRadius((Math.round(Math.random()*100+2)));
-//				int väärtus3 = 104-(int)ring3.getRadius();
-//				text3.setText(String.valueOf(väärtus3));
-//				points+=väärtus3;
-//				score.set(points);
-//			}
-//		});	
+		stack3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent me) {
+				double x = stseen1.getWidth();
+				double y = stseen1.getHeight();
+				int x1 = (int)Math.round(Math.random()*(x-50));
+				int y1 = (int)Math.round(Math.random()*(y-50));
+				int r1 = (int)(Math.round(Math.random()*100+2));
+				int x2 = (int)Math.round(Math.random()*(x-50));
+				int y2 = (int)Math.round(Math.random()*(y-50));
+				int r2 = (int)(Math.round(Math.random()*100+2));
+				int x3 = (int)Math.round(Math.random()*(x-50));
+				int y3 = (int)Math.round(Math.random()*(y-50));
+				int r3 = (int)(Math.round(Math.random()*100+2));
+				
+				// ringide kattuvuse vältimine 
+				while (Math.sqrt((x2+r2-x1-r1)*(x2+r2-x1-r1)+(y2+r2-y1-r1)*(y2+r2-y1-r1)) < r1+r2 || 
+						Math.sqrt((x3+r3-x1-r1)*(x3+r3-x1-r1)+(y3+r3-y1-r1)*(y3+r3-y1-r1)) < r1+r3 || 
+						Math.sqrt((x3+r3-x2-r2)*(x3+r3-x2-r2)+(y3+r3-y2-r2)*(y3+r3-y2-r2)) < r2+r3){
+					x2 = (int)Math.round(Math.random()*(x-50));
+					y2 = (int)Math.round(Math.random()*(y-50));
+					r2 = (int)(Math.round(Math.random()*100+2));
+					x3 = (int)Math.round(Math.random()*(x-50));
+					y3 = (int)Math.round(Math.random()*(y-50));
+					r3 = (int)(Math.round(Math.random()*100+2));
+				}
+				stack1.setLayoutX(x1);
+				stack1.setLayoutY(y1);
+				ring1.setRadius(r1);
+				int väärtus1 = 104-r1;
+				text1.setText(String.valueOf(väärtus1));
+				stack2.setLayoutX(x2);
+				stack2.setLayoutY(y2);
+				ring2.setRadius(r2);
+				int väärtus2 = 104-r2;
+				text2.setText(String.valueOf(väärtus2));
+				stack3.setLayoutX(x3);
+				stack3.setLayoutY(y3);
+				ring3.setRadius(r3);
+				int väärtus3 = 104-r3;
+				text3.setText(String.valueOf(väärtus3));
+				points+=väärtus3;
+				score.set(points);
+			}
+		});
 
 		peaLava.setScene(stseen1);
 		peaLava.show();
