@@ -18,8 +18,10 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -81,7 +83,7 @@ public class KlikkimisMäng2 extends Application {
 		
 		Group juur = new Group();
 		Scene stseen1 = new Scene(juur, suurusX, suurusY);
-		peaLava.setTitle("Selektiivne klikkimine");
+		peaLava.setTitle("ClickFest");
 
 
 		//Ringide loomine:
@@ -113,7 +115,7 @@ public class KlikkimisMäng2 extends Application {
 		stack3.setLayoutX(suurusX*0.6);
 		stack3.setLayoutY(suurusY*0.2);
 		stack3.getChildren().addAll(ring3, text3);
-		MuudaRingiJaTekstiVärvSisenedesJaVäljudes(ring2, text2, Color.GREEN);
+		MuudaRingiJaTekstiVärvSisenedesJaVäljudes(ring3, text3, Color.GREEN);
 
 		//Stopperi loomine:
 		timerLabel.setText(timeSeconds.toString());
@@ -170,7 +172,6 @@ public class KlikkimisMäng2 extends Application {
 		ringid.getChildren().addAll(stack1, stack2, stack3);
 		juur.getChildren().add(ringid);
 
-		//ringide ümberpaigutamine hiirega klikates, tuleks erialdi klass teha, et ei kordaks tegevust
 		//punane ring
 		stack1.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
@@ -334,6 +335,49 @@ public class KlikkimisMäng2 extends Application {
 
 		stseen1.widthProperty().addListener(listenerX);
 		stseen1.heightProperty().addListener(listenerY);
+		
+		// uue aknasündmuse lisamine - mängu lõpetamine ja tulemuse kuvamine või uuesti alustamine
+		  peaLava.setOnHiding(new EventHandler<WindowEvent>() {
+		    public void handle(WindowEvent event) {
+		      // luuakse teine lava
+		      Stage kusimus = new Stage();
+		      Label label = new Label("Sinu tulemus "+String.valueOf(points)+" punkti on salvestatud edetabelisse! Kas tahad uuesti mängida?");
+		      Button okButton = new Button("Jah");
+		      Button cancelButton = new Button("Ei");
+		 
+		      // sündmuse lisamine nupule Jah
+		      okButton.setOnAction(new EventHandler<ActionEvent>() {
+		    	  public void handle(ActionEvent event) {
+		        	peaLava.show();
+		        	kusimus.hide();
+		        	//siin käivitada mäng uuesti (stopper, ringid ja punktiarvestus algasendisse)	  
+		        }
+		      });
+		 
+		      // sündmuse lisamine nupule Ei
+		      cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+		    	  public void handle(ActionEvent event) {
+		    		  kusimus.hide();
+		        }
+		      });
+		 
+		      // nuppude grupeerimine
+		      FlowPane pane = new FlowPane(10, 10);
+		      pane.setAlignment(Pos.CENTER);
+		      pane.getChildren().addAll(okButton, cancelButton);
+		 
+		      // küsimuse ja nuppude gruppi paigutamine
+		      VBox vBox = new VBox(10);
+		      vBox.setAlignment(Pos.CENTER);
+		      vBox.getChildren().addAll(label, pane);
+		 
+		      //stseeni loomine ja näitamine
+		      Scene stseen2 = new Scene(vBox);
+		      kusimus.setScene(stseen2);
+		      kusimus.show();
+		    }
+		  });
+		 
 	}
 
 	public static void main(String[] args) {
