@@ -408,12 +408,13 @@ public class KlikkimisMäng2 extends Application {
 			start.setScene(stseen2);
 			start.show();
 			
-			
-			
+			timeSeconds.addListener((observable, oldTimeValue, newTimeValue) -> {
+			if (newTimeValue.intValue()==0) {
 			// uue aknasündmuse lisamine - mängu lõpetamine ja tulemuse kuvamine või uuesti alustamine
-			  peaLava.setOnHiding(new EventHandler<WindowEvent>() {
-			    public void handle(WindowEvent event) {
+			 // peaLava.setOnHiding(new EventHandler<WindowEvent>() {
+			    //public void handle(WindowEvent event) {
 			      // luuakse teine lava
+				  peaLava.hide();
 			      Stage kusimus = new Stage();
 			      skoorifail.println(String.valueOf(points));
 			      logifail.println("Kokku: "+String.valueOf(points));
@@ -452,7 +453,8 @@ public class KlikkimisMäng2 extends Application {
 			      kusimus.setScene(stseen3);
 			      kusimus.show();
 			    }
-			  });
+			  //});
+			});
 			  
 			 logifail.close();
 			 skoorifail.close();
