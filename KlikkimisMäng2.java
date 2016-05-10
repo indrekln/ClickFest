@@ -21,15 +21,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.util.Duration;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 /*
  * Juur
  * -Vbox
@@ -54,6 +51,10 @@ public class KlikkimisMäng2 extends Application {
 	private Label timerLabel = new Label();
 	private IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);
 	private int points = 0;
+	private int väärtus1 = 0;
+	private int väärtus2 = 0;
+	private int väärtus3 = 0;
+	
 	private IntegerProperty score = new SimpleIntegerProperty(points);
 	
 	public void MuudaRingiJaTekstiVärvSisenedesJaVäljudes(Circle ring, Text tekst, Color ringiVärvSisenemisel) {
@@ -128,7 +129,7 @@ public class KlikkimisMäng2 extends Application {
 						//Skooride faili mängija nime sisestamine
 						String nimi = String.valueOf(tekst.getText());
 						skoorifail.print(nimi);
-						skoorifail.print("\t");		
+						skoorifail.print(" ");
 						
 						//Kui nimi korrektselt sisestatud avaneb teine (mängu)aken ja esimene aken on peidus
 						start.hide();
@@ -141,7 +142,6 @@ public class KlikkimisMäng2 extends Application {
 						Scene stseen1 = new Scene(juur, suurusX, suurusY);
 
 						//Ringide loomine:
-						int väärtus1 = 0;
 						Circle ring1 = new Ring(100,100, raadius, Color.BLACK);
 						Text text1 = new Text (String.valueOf(väärtus1));
 						text1.setFill(Color.TRANSPARENT);
@@ -151,7 +151,6 @@ public class KlikkimisMäng2 extends Application {
 						stack1.getChildren().addAll(ring1, text1);
 						MuudaRingiJaTekstiVärvSisenedesJaVäljudes(ring1, text1, Color.RED);
 
-						int väärtus2 = 0;
 						Circle ring2 = new Ring(200,100, raadius, Color.BLACK);
 						Text text2 = new Text (String.valueOf(väärtus2));
 						text2.setFill(Color.TRANSPARENT);
@@ -161,7 +160,6 @@ public class KlikkimisMäng2 extends Application {
 						stack2.getChildren().addAll(ring2, text2);
 						MuudaRingiJaTekstiVärvSisenedesJaVäljudes(ring2, text2, Color.ORANGE);
 
-						int väärtus3 = 0;
 						Circle ring3 = new Ring(300,100, raadius, Color.BLACK);
 						Text text3 = new Text (String.valueOf(väärtus3));
 						text3.setFill(Color.TRANSPARENT);
@@ -216,7 +214,7 @@ public class KlikkimisMäng2 extends Application {
 						ring1.setOnMouseClicked(new EventHandler<MouseEvent>() {
 							public void handle(MouseEvent me) {
 								points+=väärtus1;
-								logifail.println(väärtus1);
+								logifail.println(String.valueOf(väärtus1));
 								score.set(points);
 								double x = stseen1.getWidth();
 								double y = stseen1.getHeight();
@@ -246,19 +244,19 @@ public class KlikkimisMäng2 extends Application {
 								stack1.setLayoutY(y1);
 								ring1.setRadius(r1);
 								//int väärtus1 = 104-r1;
-								int väärtus1 = juhuslikPunktisumma();
+								väärtus1 = juhuslikPunktisumma();
 								text1.setText(String.valueOf(väärtus1));
 								stack2.setLayoutX(x2);
 								stack2.setLayoutY(y2);
 								ring2.setRadius(r2);
 								//int väärtus2 = 104-r2;
-								int väärtus2 = juhuslikPunktisumma();
+								väärtus2 = juhuslikPunktisumma();
 								text2.setText(String.valueOf(väärtus2));
 								stack3.setLayoutX(x3);
 								stack3.setLayoutY(y3);
 								ring3.setRadius(r3);
 								//int väärtus3 = 104-r3;
-								int väärtus3 = juhuslikPunktisumma();
+								väärtus3 = juhuslikPunktisumma();
 								text3.setText(String.valueOf(väärtus3));
 							}
 						});
@@ -267,7 +265,7 @@ public class KlikkimisMäng2 extends Application {
 						ring2.setOnMouseClicked(new EventHandler<MouseEvent>() {
 							public void handle(MouseEvent me) {
 								points+=väärtus2; // punktide arvestus ikka ei tööta!
-								logifail.println(väärtus2);
+								logifail.println(String.valueOf(väärtus2));
 								score.set(points);
 								double x = stseen1.getWidth();
 								double y = stseen1.getHeight();
@@ -297,19 +295,19 @@ public class KlikkimisMäng2 extends Application {
 								stack1.setLayoutY(y1);
 								ring1.setRadius(r1);
 								//int väärtus1 = 104-r1;
-								int väärtus1 = juhuslikPunktisumma();
+								väärtus1 = juhuslikPunktisumma();
 								text1.setText(String.valueOf(väärtus1));
 								stack2.setLayoutX(x2);
 								stack2.setLayoutY(y2);
 								ring2.setRadius(r2);
 								//int väärtus2 = 104-r2;
-								int väärtus2 = juhuslikPunktisumma();
+								väärtus2 = juhuslikPunktisumma();
 								text2.setText(String.valueOf(väärtus2));
 								stack3.setLayoutX(x3);
 								stack3.setLayoutY(y3);
 								ring3.setRadius(r3);
 								//int väärtus3 = 104-r3;
-								int väärtus3 = juhuslikPunktisumma();
+								väärtus3 = juhuslikPunktisumma();
 								text3.setText(String.valueOf(väärtus3));
 
 							}
@@ -319,7 +317,7 @@ public class KlikkimisMäng2 extends Application {
 						ring3.setOnMouseClicked(new EventHandler<MouseEvent>() {
 							public void handle(MouseEvent me) {
 								points+=väärtus3;
-								logifail.println(väärtus3);
+								logifail.println(String.valueOf(väärtus3));
 								score.set(points);
 								double x = stseen1.getWidth();
 								double y = stseen1.getHeight();
@@ -349,19 +347,20 @@ public class KlikkimisMäng2 extends Application {
 								stack1.setLayoutY(y1);
 								ring1.setRadius(r1);
 								//int väärtus1 = 104-r1;
-								int väärtus1 = juhuslikPunktisumma();
+								väärtus1 = juhuslikPunktisumma();
+								
 								text1.setText(String.valueOf(väärtus1));
 								stack2.setLayoutX(x2);
 								stack2.setLayoutY(y2);
 								ring2.setRadius(r2);
 								//int väärtus2 = 104-r2;
-								int väärtus2 = juhuslikPunktisumma();
+								väärtus2 = juhuslikPunktisumma();
 								text2.setText(String.valueOf(väärtus2));
 								stack3.setLayoutX(x3);
 								stack3.setLayoutY(y3);
 								ring3.setRadius(r3);
 								//int väärtus3 = 104-r3;
-								int väärtus3 = juhuslikPunktisumma();
+								väärtus3 = juhuslikPunktisumma();
 								text3.setText(String.valueOf(väärtus3));	
 							}
 						});
@@ -420,30 +419,38 @@ public class KlikkimisMäng2 extends Application {
 			      kusimus.setTitle("Mängu tulemus");
 			      skoorifail.println(String.valueOf(points));
 			      logifail.println("Kokku: "+String.valueOf(points));
-			      Label label = new Label("Sinu tulemus "+String.valueOf(points)+" punkti on salvestatud edetabelisse! Kas tahad uuesti mängida?");
-			      Button okButton = new Button("Jah");
-			      Button cancelButton = new Button("Ei");
+			      Label label = new Label("Sinu tulemus "+String.valueOf(points)+" punkti on salvestatud edetabelisse!");
+			      //Button okButton = new Button("Jah");
+			      //Button cancelButton = new Button("Ei");
+			      Button okButton = new Button("OK");
+			      
+			      // sündmuse lisamine nupule OK
+			      okButton.setOnAction(new EventHandler<ActionEvent>() {
+			    	  public void handle(ActionEvent event) {
+			    		  kusimus.hide(); 
+			        }
+			      });
 			 
-			      // sündmuse lisamine nupule Jah
+			      /* sündmuse lisamine nupule Jah
 			      okButton.setOnAction(new EventHandler<ActionEvent>() {
 			    	  public void handle(ActionEvent event) {
 			        	peaLava.show();
 			        	kusimus.hide();
-			        	//siin käivitada mäng uuesti (stopper, ringid ja punktiarvestus algasendisse)	  
+			        	//siin käivitada mäng uuesti (stopper, ringid ja punktiarvestus algasendisse), praegu ei toimi	  
 			        }
 			      });
-			 
+			 	
 			      // sündmuse lisamine nupule Ei
 			      cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 			    	  public void handle(ActionEvent event) {
-			    		  kusimus.hide();
+			    		  kusimus.hide(); 
 			        }
-			      });
+			      });*/
 			 
 			      // nuppude grupeerimine
 			      FlowPane pane = new FlowPane(10, 10);
 			      pane.setAlignment(Pos.CENTER);
-			      pane.getChildren().addAll(okButton, cancelButton);
+			      pane.getChildren().addAll(okButton);
 			 
 			      // küsimuse ja nuppude gruppi paigutamine
 			      VBox vBox3 = new VBox(10);
@@ -451,7 +458,7 @@ public class KlikkimisMäng2 extends Application {
 			      vBox3.getChildren().addAll(label, pane);
 			 
 			      //stseeni loomine ja näitamine
-			      Scene stseen3 = new Scene(vBox3, 500, 150);
+			      Scene stseen3 = new Scene(vBox3, 600, 150);
 			      kusimus.setScene(stseen3);
 			      kusimus.show();
 			    }
