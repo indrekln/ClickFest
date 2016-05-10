@@ -107,7 +107,7 @@ public class KlikkimisMäng2 extends Application {
 		File fail2 = new File("logifail.txt");
 		PrintWriter logifail = new PrintWriter(fail2, "UTF-8");
 
-		// luuakse lava
+		// Luuakse esimene lava/aken
 		Stage start = new Stage();
 		start.setTitle("Start ClickFest");
 		TextField tekst = new TextField();
@@ -129,7 +129,8 @@ public class KlikkimisMäng2 extends Application {
 						String nimi = String.valueOf(tekst.getText());
 						skoorifail.print(nimi);
 						skoorifail.print("\t");		
-
+						
+						//Kui nimi korrektselt sisestatud avaneb teine (mängu)aken ja esimene aken on peidus
 						start.hide();
 						double suurusX = 800.0;
 						double suurusY = 600.0;
@@ -138,7 +139,6 @@ public class KlikkimisMäng2 extends Application {
 						Group juur = new Group();
 						peaLava.setTitle("ClickFest");
 						Scene stseen1 = new Scene(juur, suurusX, suurusY);
-
 
 						//Ringide loomine:
 						int väärtus1 = 0;
@@ -212,7 +212,7 @@ public class KlikkimisMäng2 extends Application {
 						juur.getChildren().addAll(vb1, ringid);
 
 
-						//punane ring
+						//hiirega kliki sündmused: punase ringi liikumine ja punktiväärtus
 						ring1.setOnMouseClicked(new EventHandler<MouseEvent>() {
 							public void handle(MouseEvent me) {
 								points+=väärtus1;
@@ -263,7 +263,7 @@ public class KlikkimisMäng2 extends Application {
 							}
 						});
 
-						//kollane ring
+						//hiirega kliki sündmused: kollase ringi liikumine ja punktiväärtus
 						ring2.setOnMouseClicked(new EventHandler<MouseEvent>() {
 							public void handle(MouseEvent me) {
 								points+=väärtus2; // punktide arvestus ikka ei tööta!
@@ -315,7 +315,7 @@ public class KlikkimisMäng2 extends Application {
 							}
 						});
 
-						//roheline ring
+						//hiirega kliki sündmused: rohelise ringi liikumine ja punktiväärtus
 						ring3.setOnMouseClicked(new EventHandler<MouseEvent>() {
 							public void handle(MouseEvent me) {
 								points+=väärtus3;
@@ -366,9 +366,9 @@ public class KlikkimisMäng2 extends Application {
 							}
 						});
 
-
 						peaLava.setScene(stseen1);
 						peaLava.show(); 
+						
 						//jälgib akna X/Y-mõõtmete muutumist ning muudab vastavalt ringi mõõtmeid
 						//Object-tüüpi väärtuseid ei saanud teisendada, selle asemel kasutusel Number-tüüp
 						ChangeListener<Number> listenerY = new ChangeListener<Number>() {
@@ -408,6 +408,7 @@ public class KlikkimisMäng2 extends Application {
 			start.setScene(stseen2);
 			start.show();
 			
+			// Mängu lõpu akna ja tulemuse kuvamine
 			timeSeconds.addListener((observable, oldTimeValue, newTimeValue) -> {
 			if (newTimeValue.intValue()==0) {
 			// uue aknasündmuse lisamine - mängu lõpetamine ja tulemuse kuvamine või uuesti alustamine
@@ -416,6 +417,7 @@ public class KlikkimisMäng2 extends Application {
 			      // luuakse teine lava
 				  peaLava.hide();
 			      Stage kusimus = new Stage();
+			      kusimus.setTitle("Mängu tulemus");
 			      skoorifail.println(String.valueOf(points));
 			      logifail.println("Kokku: "+String.valueOf(points));
 			      Label label = new Label("Sinu tulemus "+String.valueOf(points)+" punkti on salvestatud edetabelisse! Kas tahad uuesti mängida?");
@@ -449,7 +451,7 @@ public class KlikkimisMäng2 extends Application {
 			      vBox3.getChildren().addAll(label, pane);
 			 
 			      //stseeni loomine ja näitamine
-			      Scene stseen3 = new Scene(vBox3);
+			      Scene stseen3 = new Scene(vBox3, 500, 150);
 			      kusimus.setScene(stseen3);
 			      kusimus.show();
 			    }
