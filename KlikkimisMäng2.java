@@ -98,7 +98,7 @@ public class KlikkimisMäng2 extends Application {
 		if (Math.sqrt((r2x-r1x)*(r2x-r1x)+(r2y-r1y)*(r2y-r1y)) < raadius*2 || 
 				Math.sqrt((r3x-r1x)*(r3x-r1x)+(r3y-r1y)*(r3y-r1y)) < raadius*2 || 
 				Math.sqrt((r3x-r2x)*(r3x-r2x)+(r3y-r2y)*(r3y-r2y)) < raadius*2) {
-			System.out.println("Kattuvad ringid");
+			//System.out.println("Kattuvad ringid");
 			return false;
 		} else {
 			return true;
@@ -118,10 +118,6 @@ public class KlikkimisMäng2 extends Application {
 		//Mängija logifail: mängija kõiki (palli)valikuid sisaldav fail
 		File fail2 = new File("logifail.txt");
 		PrintWriter logifail = new PrintWriter(fail2, "UTF-8");
-		logifail.print("test log");
-		logifail.println(" realõpp");
-		skoorifail.print("test skoor");
-		skoorifail.println(" realõpp");
 		
 		// Luuakse esimene lava/aken
 		Stage start = new Stage();
@@ -147,11 +143,10 @@ public class KlikkimisMäng2 extends Application {
 					} else {
 						//Skooride faili mängija nime sisestamine
 						nimi = String.valueOf(tekst.getText());
-						System.out.println("Nimi: " + nimi);
 						parimNimi[0] = nimi;
 						skoorifail.print(nimi + ";");
 						skoorifail.flush();
-						System.out.println("parimNimi[0]: " + parimNimi[0]);
+
 						//Kui nimi korrektselt sisestatud, avaneb teine (mängu)aken ja esimene aken on peidus
 						start.hide();
 
@@ -240,6 +235,7 @@ public class KlikkimisMäng2 extends Application {
 							public void handle(MouseEvent me) {
 								points+=väärtus1;
 								logifail.println(String.valueOf(väärtus1));
+								logifail.flush();
 								score.set(points);
 								double x = stseen1.getWidth();
 								double y = stseen1.getHeight();
@@ -281,6 +277,7 @@ public class KlikkimisMäng2 extends Application {
 							public void handle(MouseEvent me) {
 								points+=väärtus2;
 								logifail.println(String.valueOf(väärtus2));
+								logifail.flush();
 								score.set(points);
 								double x = stseen1.getWidth();
 								double y = stseen1.getHeight();
@@ -322,6 +319,7 @@ public class KlikkimisMäng2 extends Application {
 							public void handle(MouseEvent me) {
 								points+=väärtus3;
 								logifail.println(String.valueOf(väärtus3));
+								logifail.flush();
 								score.set(points);
 								double x = stseen1.getWidth();
 								double y = stseen1.getHeight();
@@ -442,6 +440,7 @@ public class KlikkimisMäng2 extends Application {
 					Stage kusimus = new Stage();
 					kusimus.setTitle("Mängu tulemus");
 					logifail.println("Kokku: "+String.valueOf(points));
+					logifail.flush();
 					Label label = new Label("Sinu tulemus "+String.valueOf(points)+" punkti on salvestatud edetabelisse!");
 					//Button okButton = new Button("Jah");
 					//Button cancelButton = new Button("Ei");
@@ -488,18 +487,11 @@ public class KlikkimisMäng2 extends Application {
 				//});
 			});
 
-			logifail.close();
-//			skoorifail.close();
-
 
 		} catch (NimeErind e) {
 			tekst.setText("Palun sisesta nimi korrektselt!");
 		} finally {
-		     if (skoorifail != null) {
-		    //	 skoorifail.close(); // **** closing it flushes it and reclaims resources ****
-		      }
-		   }
-
+		}
 	}
 	public static void main(String[] args) {
 		launch(args);
