@@ -150,6 +150,7 @@ public class KlikkimisMäng2 extends Application {
 						System.out.println("Nimi: " + nimi);
 						parimNimi[0] = nimi;
 						skoorifail.print(nimi + ";");
+						skoorifail.flush();
 						System.out.println("parimNimi[0]: " + parimNimi[0]);
 						//Kui nimi korrektselt sisestatud, avaneb teine (mängu)aken ja esimene aken on peidus
 						start.hide();
@@ -405,10 +406,6 @@ public class KlikkimisMäng2 extends Application {
 				}
 			});
 
-			for (int i = 0; i < 10; i++) {
-				skoorifail.print(parimNimi[i] + ";");
-			}
-			skoorifail.println("");
 			
 			// textfieldi ja nupu paigutamine
 			VBox vBox2 = new VBox(10);
@@ -428,6 +425,19 @@ public class KlikkimisMäng2 extends Application {
 					// peaLava.setOnHiding(new EventHandler<WindowEvent>() {
 					//public void handle(WindowEvent event) {
 					// luuakse teine lava
+					for (int i = 0; i < 10; i++) {
+						skoorifail.print(parimNimi[i] + ";");
+					}
+					skoorifail.println("");
+					skoorifail.println(points);
+					skoorifail.flush();
+					
+					for (int i = 0; i < 10; i++) {
+						System.out.print(parimNimi[i] + ";");
+					}
+					System.out.println("hhhh");
+					System.out.println(points);
+					
 					peaLava.hide();
 					Stage kusimus = new Stage();
 					kusimus.setTitle("Mängu tulemus");
@@ -479,12 +489,16 @@ public class KlikkimisMäng2 extends Application {
 			});
 
 			logifail.close();
-			skoorifail.close();
+//			skoorifail.close();
 
 
 		} catch (NimeErind e) {
 			tekst.setText("Palun sisesta nimi korrektselt!");
-		}
+		} finally {
+		     if (skoorifail != null) {
+		    //	 skoorifail.close(); // **** closing it flushes it and reclaims resources ****
+		      }
+		   }
 
 	}
 	public static void main(String[] args) {
