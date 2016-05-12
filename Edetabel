@@ -1,0 +1,100 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class Edetabel {
+
+	//private String failinimi;
+	private static String[] nimed = {"Shannon", "Turing", "Hawking", "Gates", "Jobs", "Wozniak", "Musk", "Page", "Zuckrbrg", "Ilves"};
+	private static String[] punktid = {"1000", "950", "900", "850", "800", "750", "700", "650", "600", "550"};
+
+	
+	//sorteerib edetabeli failis nimed punktide järgi pingeritta
+	public static ArrayList<String[]> sorteeri(String[] numbriMassiiv, String[] sõneMassiiv){
+		int kordus = numbriMassiiv.length;
+		while (kordus > 0){
+			for (int i = 0; i < numbriMassiiv.length-1; i++){
+				int eesNr = Integer.parseInt(numbriMassiiv[i]);
+				int tagaNr = Integer.parseInt(numbriMassiiv[i+1]);
+				String eesSõne = sõneMassiiv[i];
+				String tagaSõne = sõneMassiiv[i+1];
+				if (eesNr < tagaNr){
+					numbriMassiiv[i] = Integer.toString(tagaNr);
+					numbriMassiiv[i+1] = Integer.toString(eesNr);
+					sõneMassiiv[i] = tagaSõne;
+					sõneMassiiv[i+1] = eesSõne;
+				}
+			}
+			kordus--;
+		}
+		ArrayList<String[]> ret = new ArrayList<>();
+		ret.add(sõneMassiiv);
+		ret.add(numbriMassiiv);
+
+		return ret;
+	}
+
+	//loeb edetabeli failist nimed ja punktid ning tagastab need ArrayListina
+	public static ArrayList<String[]> loeFailist(File failinimi) throws IOException, FileNotFoundException {
+		BufferedReader fail = new BufferedReader(new FileReader(failinimi));
+		String rida;
+		String[] nimed1 = new String[10];
+		String[] punktid1 = new String[10];
+		if ((rida = fail.readLine())!= null) {
+			String[] nimed2 = rida.split(";");
+			for (int i = 0; i < 10; i++){
+				nimed1[i] = nimed2[i];
+			}
+			if ((rida = fail.readLine())!= null) {
+				String[] punktid2 = rida.split(";");
+				for (int i = 0; i < 10; i++){
+					punktid1[i] = punktid2[i];
+				}
+			} 
+			fail.close();
+			ArrayList<String[]> ret = sorteeri(punktid1, nimed1);
+			return ret;
+		}
+		else {
+			fail.close();
+			ArrayList<String[]> ret = sorteeri(punktid, nimed);
+
+			return ret;
+		}
+	}
+	
+	//nihutab massiivis elemente ühe koha võrra edasi alates määratud kohast
+	public static String[] nihuta(String[] massiiv, int koht) {
+		for (int i = massiiv.length-2; i < koht; i--){ //massiivi pikkus on suurem viimase elemendi indeks, vaja tõsta alates eelviimasest  
+			massiiv[i+1] = massiiv[i];
+		}
+		return massiiv;
+	}
+	
+	//lisab tabelisse mängija andmed ning tagastab tabeli
+	public static ArrayList<String[]> lisaTabelisse(Mängija mängija, ArrayList<String[]> edetabel) {
+		String[] nimed = edetabel.get(0);
+		String[] punktid = edetabel.get(1);
+		int punktidM = mängija.getPunktid();
+		String nimiM = mängija.getNimi();
+		int tabeliPunkt = Integer.parseInt(punktid[0]);
+		int koht = 0;
+		while (tabeliPunkt > punktidM){
+			koht++;
+			tabeliPunkt = Integer.parseInt(punktid[koht]);
+			}
+		nimed = nihuta(nimed, koht);
+		punktid = nihuta(punktid, koht);
+		nimed[koht] = nimiM;
+		punktid[koht] = Integer.toString(punktidM);
+		
+		ArrayList<String[]> ret = new ArrayList<>();
+		ret.add(nimed);
+		ret.add(punktid);
+
+		return ret;
+	}
+}
