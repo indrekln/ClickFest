@@ -39,40 +39,44 @@ public class Edetabel {
 
 	//loeb edetabeli failist nimed ja punktid ning tagastab need ArrayListina
 	public static ArrayList<String[]> loeFailist(File failinimi) throws IOException, FileNotFoundException {
-		System.out.println("public static ArrayList<String[]> loeFailist(File failinimi)");
-		
-		BufferedReader fail = new BufferedReader(new FileReader(failinimi));
-		String rida;
-		String[] nimed1 = new String[10];
-		String[] punktid1 = new String[10];
-		if ((rida = fail.readLine())!= null) {
-			String[] nimed2 = rida.split(";");
-			for (int i = 0; i < 10; i++){
-				nimed1[i] = nimed2[i];
-			}
-			if ((rida = fail.readLine())!= null) {
-				String[] punktid2 = rida.split(";");
-				for (int i = 0; i < 10; i++){
-					punktid1[i] = punktid2[i];
-				}
-			} 
-			fail.close();
-			ArrayList<String[]> ret = sorteeri(punktid1, nimed1);
-			return ret;
-		}
-		else {
-			fail.close();
-			ArrayList<String[]> ret = sorteeri(punktid, nimed);
+		try {
+			BufferedReader fail = new BufferedReader(new FileReader(failinimi));
+			String rida;
+			String[] nimed1 = new String[10];
+			String[] punktid1 = new String[10];
 
+			if ((rida = fail.readLine())!= null) {
+				String[] nimed2 = rida.split(";");
+				for (int i = 0; i < 10; i++){
+					nimed1[i] = nimed2[i];
+				}
+				if ((rida = fail.readLine())!= null) {
+					String[] punktid2 = rida.split(";");
+					for (int j = 0; j < 10; j++){
+						punktid1[j] = punktid2[j];
+					}
+				} 
+				fail.close();
+				ArrayList<String[]> ret = sorteeri(punktid1, nimed1);
+				return ret;
+			}
+			else {
+				fail.close();
+				ArrayList<String[]> ret = sorteeri(punktid, nimed);
+
+				return ret;
+			}
+		} catch (FileNotFoundException e) {
+			ArrayList<String[]> ret = new ArrayList<>();
+			ret.add(nimed);
+			ret.add(punktid);
 			return ret;
 		}
 	}
 	
 	//nihutab massiivis elemente ühe koha võrra edasi alates määratud kohast
 	public static String[] nihuta(String[] massiiv, int koht) {
-		System.out.println("public static String[] nihuta(String[] massiiv, int koht)");
 		for (int i = massiiv.length-2; i > koht; i--){ //massiivi pikkus on suurem viimase elemendi indeksist; vaja tõsta alates eelviimasest
-			System.out.println(massiiv[i+1] + " " + massiiv[i]);
 			massiiv[i+1] = massiiv[i];
 		}
 		return massiiv;
@@ -80,7 +84,6 @@ public class Edetabel {
 	
 	//lisab tabelisse mängija andmed ning tagastab tabeli
 	public static ArrayList<String[]> lisaTabelisse(String nimiM, int punktidM, ArrayList<String[]> edetabel) {
-		System.out.println("public static ArrayList<String[]> lisaTabelisse(String nimiM, int punktidM, ArrayList<String[]> edetabel)");
 		String[] nimed = edetabel.get(0);
 		String[] punktid = edetabel.get(1);
 //		int punktidM = mängija.getPunktid();
@@ -93,8 +96,8 @@ public class Edetabel {
 			}
 		nimed = nihuta(nimed, koht);
 		punktid = nihuta(punktid, koht);
-		nimed[koht] = nimiM;
-		punktid[koht] = Integer.toString(punktidM);
+		nimed[koht+1] = nimiM;
+		punktid[koht+1] = Integer.toString(punktidM);
 		
 		ArrayList<String[]> ret = new ArrayList<>();
 		ret.add(nimed);
