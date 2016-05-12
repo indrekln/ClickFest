@@ -63,7 +63,7 @@ import javafx.util.Duration;
 public class KlikkimisMäng2 extends Application {
 
 	//Ajaarvestus
-	private static final Integer STARTTIME = 10;
+	private static final Integer STARTTIME = 20;
 	private Timeline timeline;
 	private Label timerLabel = new Label();
 	private IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);
@@ -154,8 +154,8 @@ public class KlikkimisMäng2 extends Application {
 						} else {
 							//Skooride faili mängija nime sisestamine
 							nimi = String.valueOf(tekst.getText());
-//							mängija1.setNimi(nimi);
-//							mängija1.setPunktid(points);
+							//mängija1.setNimi(nimi);
+							//mängija1.setPunktid(points);
 
 							//Kui nimi korrektselt sisestatud, avaneb teine (mängu)aken ja esimene aken on peidus
 							start.hide();
@@ -484,17 +484,10 @@ public class KlikkimisMäng2 extends Application {
 					logifail.println("Kokku: "+String.valueOf(points));
 					logifail.flush();
 					
-					String parimad = "";
-					for (int i = 0; i < edetabel.get(0).length; i++){
-						parimad = parimad + edetabel.get(1)[i] + "\t  " + edetabel.get(0)[i] + "\n"; 
-					}
-					
-					Label highscores = new Label(parimad);
-					
 					Label label = new Label("Sinu tulemus on "+String.valueOf(points)+" punkti.");
 					if (points > Integer.parseInt(edetabel.get(1)[9])){
 						label.setText("Sinu tulemus "+String.valueOf(points)+" punkti on salvestatud edetabelisse!");
-						//Edetabel.lisaTabelisse(mängija1, edetabel);
+						Edetabel.lisaTabelisse(nimi, points, edetabel);
 						skoorifail.print(edetabel.get(0)[0]);
 						for (int i = 1; i < edetabel.get(0).length; i++){
 							skoorifail.print(";" + edetabel.get(0)[i]);
@@ -510,6 +503,13 @@ public class KlikkimisMäng2 extends Application {
 					else {
 						label.setText("Sinu tulemus "+String.valueOf(points)+" punkti ei olnud edetabelisse pääsemiseks piisav!");
 					}
+					
+					String parimad = "";
+					for (int i = 0; i < edetabel.get(0).length; i++){
+						parimad = parimad + edetabel.get(1)[i] + "\t  " + edetabel.get(0)[i] + "\n"; 
+					}
+					
+					Label highscores = new Label(parimad);
 					
 					//Button okButton = new Button("Jah");
 					//Button cancelButton = new Button("Ei");
