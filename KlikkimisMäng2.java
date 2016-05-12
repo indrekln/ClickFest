@@ -101,7 +101,6 @@ public class KlikkimisMäng2 extends Application {
 		if (Math.sqrt((r2x-r1x)*(r2x-r1x)+(r2y-r1y)*(r2y-r1y)) < raadius*2 || 
 				Math.sqrt((r3x-r1x)*(r3x-r1x)+(r3y-r1y)*(r3y-r1y)) < raadius*2 || 
 				Math.sqrt((r3x-r2x)*(r3x-r2x)+(r3y-r2y)*(r3y-r2y)) < raadius*2) {
-			//System.out.println("Kattuvad ringid");
 			return false;
 		} else {
 			return true;
@@ -118,10 +117,6 @@ public class KlikkimisMäng2 extends Application {
 		//Edetabeli faili loomine
 		File fail1 = new File("edetabel.txt");
 		ArrayList<String[]> edetabel = Edetabel.loeFailist(fail1);
-		for (int i = 0; i < 10; i++){
-			System.out.println(edetabel.get(0)[i]);
-			System.out.println(edetabel.get(1)[i]);
-		}
 		PrintWriter skoorifail = new PrintWriter(fail1, "UTF-8");
 		//Mängija logifail: mängija kõiki (palli)valikuid sisaldav fail
 		File fail2 = new File("logifail.txt");
@@ -231,6 +226,8 @@ public class KlikkimisMäng2 extends Application {
 //							
 							//Stopperi loomine:
 							// timerLabel text property ja timeSeconds property väärtuste sidumine
+							Label mängijaNimi = new Label("MÄNGIJA: " + nimi);
+							mängijaNimi.setStyle("-fx-font-size: 2em;");
 							Label aeg = new Label("AEG:");
 							aeg.setStyle("-fx-font-size: 2em;");
 							timerLabel.textProperty().bind(timeSeconds.asString());
@@ -258,15 +255,15 @@ public class KlikkimisMäng2 extends Application {
 							//vb1.setPrefWidth(stseen1.getWidth());
 							vb1.setLayoutX(10);
 							vb1.setLayoutY(10);
-							vb1.setMaxSize(150,100);
+							vb1.setMaxSize(250,100);
 	
 							// objektide paigutamine juure alla:
-							vb1.getChildren().addAll(aeg, timerLabel, skoor, scoreLabel);
+							vb1.getChildren().addAll(mängijaNimi, aeg, timerLabel, skoor, scoreLabel);
 
 							HBox hb1 = new HBox(0);
 							hb1.setAlignment(Pos.CENTER_LEFT);
 							hb1.setLayoutX(10);
-							hb1.setLayoutY(160);
+							hb1.setLayoutY(200);
 							hb1.setMaxSize(150, 100);
 							
 							hb1.getChildren().addAll(stack4, stack5, stack6);
@@ -492,7 +489,6 @@ public class KlikkimisMäng2 extends Application {
 						for (int i = 1; i < edetabel.get(0).length; i++){
 							skoorifail.print(";" + edetabel.get(0)[i]);
 						}
-						skoorifail.println();
 						skoorifail.print("\n" + edetabel.get(1)[0]);
 						for (int i = 1; i < edetabel.get(1).length; i++){
 							skoorifail.print(";" + edetabel.get(1)[i]);
