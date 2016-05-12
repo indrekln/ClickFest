@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -25,6 +24,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -178,7 +178,7 @@ public class KlikkimisMäng2 extends Application {
 							StackPane stack1 = new StackPane();
 							stack1.setLayoutX(r1x);
 							stack1.setLayoutY(r1y);
-							stack1.getChildren().addAll(ring1, text1);
+							stack1.getChildren().addAll(ring1/*, text1*/);
 							MuudaRingiJaTekstiVärvSisenedesJaVäljudes(ring1, text1, Color.RED);
 	
 							Circle ring2 = new Circle(r2x, r2y, raadius, Color.BLACK);
@@ -187,7 +187,7 @@ public class KlikkimisMäng2 extends Application {
 							StackPane stack2 = new StackPane();
 							stack2.setLayoutX(r2x);
 							stack2.setLayoutY(r2y);
-							stack2.getChildren().addAll(ring2, text2);
+							stack2.getChildren().addAll(ring2/*, text2*/);
 							MuudaRingiJaTekstiVärvSisenedesJaVäljudes(ring2, text2, Color.ORANGE);
 	
 							Circle ring3 = new Circle(r3x, r3y, raadius, Color.BLACK);
@@ -196,14 +196,39 @@ public class KlikkimisMäng2 extends Application {
 							StackPane stack3 = new StackPane();
 							stack3.setLayoutX(r3x);
 							stack3.setLayoutY(r3y);
-							stack3.getChildren().addAll(ring3, text3);
+							stack3.getChildren().addAll(ring3/*, text3*/);
 							MuudaRingiJaTekstiVärvSisenedesJaVäljudes(ring3, text3, Color.GREEN);
+
+							Circle ring4 = new Circle(0, 0, 20, Color.RED);
+							Text text4 = new Text ("-50");
+							text4.setFont(new Font(20));
+							StackPane stack4 = new StackPane();
+							stack4.setLayoutX(0);
+							stack4.setLayoutY(0);
+							stack4.getChildren().addAll(ring4, text4);
+							
+							Circle ring5 = new Circle(0, 0, 20, Color.ORANGE);
+							Text text5 = new Text ("0");
+							text5.setFont(new Font(20));
+							StackPane stack5 = new StackPane();
+							stack5.setLayoutX(0);
+							stack5.setLayoutY(0);
+							stack5.getChildren().addAll(ring5, text5);
+							
+							Circle ring6 = new Circle(0, 0, 20, Color.GREEN);
+							Text text6 = new Text ("+50");
+							text6.setFont(new Font(20));
+							StackPane stack6 = new StackPane();
+							stack6.setLayoutX(0);
+							stack6.setLayoutY(0);
+							stack6.getChildren().addAll(ring6, text6);
+							
+							Group ringid1 = new Group();
+							ringid1.getChildren().addAll(stack1, stack2, stack3);
+							ringid1.maxHeight(suurusY);
+							ringid1.maxWidth(suurusX);
 	
-							Group ringid = new Group();
-							ringid.getChildren().addAll(stack1, stack2, stack3);
-							ringid.maxHeight(suurusY);
-							ringid.maxWidth(suurusX);
-	
+//							
 							//Stopperi loomine:
 							// timerLabel text property ja timeSeconds property väärtuste sidumine
 							Label aeg = new Label("AEG:");
@@ -237,13 +262,22 @@ public class KlikkimisMäng2 extends Application {
 	
 							// objektide paigutamine juure alla:
 							vb1.getChildren().addAll(aeg, timerLabel, skoor, scoreLabel);
-							juur.getChildren().addAll(vb1, ringid);
+
+							HBox hb1 = new HBox(0);
+							hb1.setAlignment(Pos.CENTER_LEFT);
+							hb1.setLayoutX(10);
+							hb1.setLayoutY(160);
+							hb1.setMaxSize(150, 100);
+							
+							hb1.getChildren().addAll(stack4, stack5, stack6);
+							juur.getChildren().addAll(vb1, hb1, ringid1);
 	
 	
 							//hiirega kliki sündmused: punase ringi liikumine ja punktiväärtus
 							ring1.setOnMouseClicked(new EventHandler<MouseEvent>() {
 								public void handle(MouseEvent me) {
-									points+=väärtus1;
+									points+=-50;
+									//points+=väärtus1;
 									//mängija1.setPunktid(points);
 									logifail.println(String.valueOf(väärtus1));
 									logifail.flush();
@@ -286,7 +320,7 @@ public class KlikkimisMäng2 extends Application {
 							//hiirega kliki sündmused: kollase ringi liikumine ja punktiväärtus
 							ring2.setOnMouseClicked(new EventHandler<MouseEvent>() {
 								public void handle(MouseEvent me) {
-									points+=väärtus2;
+									//points+=väärtus2;
 									//mängija1.setPunktid(points);
 									logifail.println(String.valueOf(väärtus2));
 									logifail.flush();
@@ -329,7 +363,8 @@ public class KlikkimisMäng2 extends Application {
 							//hiirega kliki sündmused: rohelise ringi liikumine ja punktiväärtus
 							ring3.setOnMouseClicked(new EventHandler<MouseEvent>() {
 								public void handle(MouseEvent me) {
-									points+=väärtus3;
+									points+=50;
+									//points+=väärtus3;
 									//mängija1.setPunktid(points);
 									logifail.println(String.valueOf(väärtus3));
 									logifail.flush();
@@ -441,31 +476,41 @@ public class KlikkimisMäng2 extends Application {
 //						skoorifail.print(parimNimi[i] + ";");
 //					}
 					
-					//Edetabel.lisaTabelisse(mängija1, edetabel);
-					skoorifail.print(edetabel.get(0)[0]);
-					for (int i = 1; i < edetabel.get(0).length; i++){
-						skoorifail.print(";" + edetabel.get(0)[i]);
-					}
-					skoorifail.println();
-					skoorifail.print("\n" + edetabel.get(1)[0]);
-					for (int i = 1; i < edetabel.get(1).length; i++){
-						skoorifail.print(";" + edetabel.get(1)[i]);
-					}
-					skoorifail.println();
-					skoorifail.flush();
+					
 					
 					peaLava.hide();
 					Stage kusimus = new Stage();
 					kusimus.setTitle("Mängu tulemus");
 					logifail.println("Kokku: "+String.valueOf(points));
 					logifail.flush();
+					
+					String parimad = "";
+					for (int i = 0; i < edetabel.get(0).length; i++){
+						parimad = parimad + edetabel.get(1)[i] + "\t  " + edetabel.get(0)[i] + "\n"; 
+					}
+					
+					Label highscores = new Label(parimad);
+					
 					Label label = new Label("Sinu tulemus on "+String.valueOf(points)+" punkti.");
 					if (points > Integer.parseInt(edetabel.get(1)[9])){
 						label.setText("Sinu tulemus "+String.valueOf(points)+" punkti on salvestatud edetabelisse!");
+						//Edetabel.lisaTabelisse(mängija1, edetabel);
+						skoorifail.print(edetabel.get(0)[0]);
+						for (int i = 1; i < edetabel.get(0).length; i++){
+							skoorifail.print(";" + edetabel.get(0)[i]);
+						}
+						skoorifail.println();
+						skoorifail.print("\n" + edetabel.get(1)[0]);
+						for (int i = 1; i < edetabel.get(1).length; i++){
+							skoorifail.print(";" + edetabel.get(1)[i]);
+						}
+						skoorifail.println();
+						skoorifail.flush();
 					}
 					else {
 						label.setText("Sinu tulemus "+String.valueOf(points)+" punkti ei olnud edetabelisse pääsemiseks piisav!");
 					}
+					
 					//Button okButton = new Button("Jah");
 					//Button cancelButton = new Button("Ei");
 					Button okButton = new Button("OK");
@@ -500,10 +545,10 @@ public class KlikkimisMäng2 extends Application {
 					// küsimuse ja nuppude gruppi paigutamine
 					VBox vBox3 = new VBox(10);
 					vBox3.setAlignment(Pos.CENTER);
-					vBox3.getChildren().addAll(label, pane);
+					vBox3.getChildren().addAll(highscores, label, pane);
 
 					//stseeni loomine ja näitamine
-					Scene stseen3 = new Scene(vBox3, 600, 150);
+					Scene stseen3 = new Scene(vBox3, 600, 300);
 					kusimus.setScene(stseen3);
 					kusimus.show();
 				}
