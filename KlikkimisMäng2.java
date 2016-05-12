@@ -1,7 +1,10 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -73,9 +76,7 @@ public class KlikkimisMäng2 extends Application {
 	private int väärtus3 = juhuslikPunktisumma();
 	private String nimi = null;
 
-	//massiivid testimiseks
-	private String[] parimNimi = new String[10];
-	private int[] parimSkoor = new int[10];
+	Mängija mängija1;
 	
 	//Akna vaikesuurus
 	private double suurusX = 800.0;
@@ -112,15 +113,22 @@ public class KlikkimisMäng2 extends Application {
 	}
 
 
-	public void start(Stage peaLava) throws FileNotFoundException, UnsupportedEncodingException {
+	public void start(Stage peaLava) throws FileNotFoundException, UnsupportedEncodingException, IOException {
 
 		//Edetabeli faili loomine
 		File fail1 = new File("edetabel.txt");
+		ArrayList<String[]> edetabel = Edetabel.loeFailist(fail1);
+		for (int i = 0; i < 10; i++){
+			System.out.println(edetabel.get(0)[i]);
+			System.out.println(edetabel.get(1)[i]);
+		}
 		PrintWriter skoorifail = new PrintWriter(fail1, "UTF-8");
 		//Mängija logifail: mängija kõiki (palli)valikuid sisaldav fail
 		File fail2 = new File("logifail.txt");
 		PrintWriter logifail = new PrintWriter(fail2, "UTF-8");
 		
+		//massiiv testimiseks
+
 		// Luuakse esimene lava/aken
 		Stage start = new Stage();
 		start.setTitle("Start ClickFest");
@@ -146,10 +154,9 @@ public class KlikkimisMäng2 extends Application {
 						} else {
 							//Skooride faili mängija nime sisestamine
 							nimi = String.valueOf(tekst.getText());
-							parimNimi[0] = nimi;
-							skoorifail.print(nimi + ";");
-							skoorifail.flush();
-	
+//							mängija1.setNimi(nimi);
+//							mängija1.setPunktid(points);
+
 							//Kui nimi korrektselt sisestatud, avaneb teine (mängu)aken ja esimene aken on peidus
 							start.hide();
 	
@@ -237,6 +244,7 @@ public class KlikkimisMäng2 extends Application {
 							ring1.setOnMouseClicked(new EventHandler<MouseEvent>() {
 								public void handle(MouseEvent me) {
 									points+=väärtus1;
+									//mängija1.setPunktid(points);
 									logifail.println(String.valueOf(väärtus1));
 									logifail.flush();
 									score.set(points);
@@ -279,6 +287,7 @@ public class KlikkimisMäng2 extends Application {
 							ring2.setOnMouseClicked(new EventHandler<MouseEvent>() {
 								public void handle(MouseEvent me) {
 									points+=väärtus2;
+									//mängija1.setPunktid(points);
 									logifail.println(String.valueOf(väärtus2));
 									logifail.flush();
 									score.set(points);
@@ -321,6 +330,7 @@ public class KlikkimisMäng2 extends Application {
 							ring3.setOnMouseClicked(new EventHandler<MouseEvent>() {
 								public void handle(MouseEvent me) {
 									points+=väärtus3;
+									//mängija1.setPunktid(points);
 									logifail.println(String.valueOf(väärtus3));
 									logifail.flush();
 									score.set(points);
@@ -427,25 +437,35 @@ public class KlikkimisMäng2 extends Application {
 					// peaLava.setOnHiding(new EventHandler<WindowEvent>() {
 					//public void handle(WindowEvent event) {
 					// luuakse teine lava
-					for (int i = 0; i < 10; i++) {
-						skoorifail.print(parimNimi[i] + ";");
-					}
-					skoorifail.println("");
-					skoorifail.println(points);
-					skoorifail.flush();
+//					for (int i = 0; i < 10; i++) {
+//						skoorifail.print(parimNimi[i] + ";");
+//					}
 					
-					for (int i = 0; i < 10; i++) {
-						System.out.print(parimNimi[i] + ";");
+					//Edetabel.lisaTabelisse(mängija1, edetabel);
+					skoorifail.print(edetabel.get(0)[0]);
+					for (int i = 1; i < edetabel.get(0).length; i++){
+						skoorifail.print(";" + edetabel.get(0)[i]);
 					}
-					System.out.println("hhhh");
-					System.out.println(points);
+					skoorifail.println();
+					skoorifail.print("\n" + edetabel.get(1)[0]);
+					for (int i = 1; i < edetabel.get(1).length; i++){
+						skoorifail.print(";" + edetabel.get(1)[i]);
+					}
+					skoorifail.println();
+					skoorifail.flush();
 					
 					peaLava.hide();
 					Stage kusimus = new Stage();
 					kusimus.setTitle("Mängu tulemus");
 					logifail.println("Kokku: "+String.valueOf(points));
 					logifail.flush();
-					Label label = new Label("Sinu tulemus "+String.valueOf(points)+" punkti on salvestatud edetabelisse!");
+					Label label = new Label("Sinu tulemus on "+String.valueOf(points)+" punkti.");
+					if (points > Integer.parseInt(edetabel.get(1)[9])){
+						label.setText("Sinu tulemus "+String.valueOf(points)+" punkti on salvestatud edetabelisse!");
+					}
+					else {
+						label.setText("Sinu tulemus "+String.valueOf(points)+" punkti ei olnud edetabelisse pääsemiseks piisav!");
+					}
 					//Button okButton = new Button("Jah");
 					//Button cancelButton = new Button("Ei");
 					Button okButton = new Button("OK");
