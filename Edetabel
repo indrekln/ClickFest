@@ -39,6 +39,8 @@ public class Edetabel {
 
 	//loeb edetabeli failist nimed ja punktid ning tagastab need ArrayListina
 	public static ArrayList<String[]> loeFailist(File failinimi) throws IOException, FileNotFoundException {
+		System.out.println("public static ArrayList<String[]> loeFailist(File failinimi)");
+		
 		BufferedReader fail = new BufferedReader(new FileReader(failinimi));
 		String rida;
 		String[] nimed1 = new String[10];
@@ -68,18 +70,21 @@ public class Edetabel {
 	
 	//nihutab massiivis elemente ühe koha võrra edasi alates määratud kohast
 	public static String[] nihuta(String[] massiiv, int koht) {
-		for (int i = massiiv.length-2; i < koht; i--){ //massiivi pikkus on suurem viimase elemendi indeks, vaja tõsta alates eelviimasest  
+		System.out.println("public static String[] nihuta(String[] massiiv, int koht)");
+		for (int i = massiiv.length-2; i > koht; i--){ //massiivi pikkus on suurem viimase elemendi indeksist; vaja tõsta alates eelviimasest
+			System.out.println(massiiv[i+1] + " " + massiiv[i]);
 			massiiv[i+1] = massiiv[i];
 		}
 		return massiiv;
 	}
 	
 	//lisab tabelisse mängija andmed ning tagastab tabeli
-	public static ArrayList<String[]> lisaTabelisse(Mängija mängija, ArrayList<String[]> edetabel) {
+	public static ArrayList<String[]> lisaTabelisse(String nimiM, int punktidM, ArrayList<String[]> edetabel) {
+		System.out.println("public static ArrayList<String[]> lisaTabelisse(String nimiM, int punktidM, ArrayList<String[]> edetabel)");
 		String[] nimed = edetabel.get(0);
 		String[] punktid = edetabel.get(1);
-		int punktidM = mängija.getPunktid();
-		String nimiM = mängija.getNimi();
+//		int punktidM = mängija.getPunktid();
+//		String nimiM = mängija.getNimi();
 		int tabeliPunkt = Integer.parseInt(punktid[0]);
 		int koht = 0;
 		while (tabeliPunkt > punktidM){
