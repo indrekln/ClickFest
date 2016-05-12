@@ -74,9 +74,9 @@ public class KlikkimisMäng2 extends Application {
 	private int väärtus1 = juhuslikPunktisumma();
 	private int väärtus2 = juhuslikPunktisumma();
 	private int väärtus3 = juhuslikPunktisumma();
-	private String nimi = null;
+	private String nimi = "Nimi";
 
-	Mängija mängija1;
+	Mängija mängija = new Mängija(nimi, points);
 	
 	//Akna vaikesuurus
 	private double suurusX = 800.0;
@@ -149,7 +149,7 @@ public class KlikkimisMäng2 extends Application {
 						} else {
 							//Skooride faili mängija nime sisestamine
 							nimi = String.valueOf(tekst.getText());
-							//mängija1.setNimi(nimi);
+							mängija.setNimi(nimi);
 							//mängija1.setPunktid(points);
 
 							//Kui nimi korrektselt sisestatud, avaneb teine (mängu)aken ja esimene aken on peidus
@@ -226,7 +226,7 @@ public class KlikkimisMäng2 extends Application {
 //							
 							//Stopperi loomine:
 							// timerLabel text property ja timeSeconds property väärtuste sidumine
-							Label mängijaNimi = new Label("MÄNGIJA: " + nimi);
+							Label mängijaNimi = new Label("MÄNGIJA: " + mängija.getNimi());
 							mängijaNimi.setStyle("-fx-font-size: 2em;");
 							Label aeg = new Label("AEG:");
 							aeg.setStyle("-fx-font-size: 2em;");
@@ -267,7 +267,8 @@ public class KlikkimisMäng2 extends Application {
 							hb1.setMaxSize(150, 100);
 							
 							hb1.getChildren().addAll(stack4, stack5, stack6);
-							juur.getChildren().addAll(vb1, hb1, ringid1);
+							vb1.getChildren().add(hb1);
+							juur.getChildren().addAll(vb1, ringid1);
 	
 	
 							//hiirega kliki sündmused: punase ringi liikumine ja punktiväärtus
@@ -275,7 +276,7 @@ public class KlikkimisMäng2 extends Application {
 								public void handle(MouseEvent me) {
 									points+=-50;
 									//points+=väärtus1;
-									//mängija1.setPunktid(points);
+									mängija.setPunktid(points);
 									logifail.println(String.valueOf(väärtus1));
 									logifail.flush();
 									score.set(points);
@@ -318,7 +319,7 @@ public class KlikkimisMäng2 extends Application {
 							ring2.setOnMouseClicked(new EventHandler<MouseEvent>() {
 								public void handle(MouseEvent me) {
 									//points+=väärtus2;
-									//mängija1.setPunktid(points);
+									mängija.setPunktid(points);
 									logifail.println(String.valueOf(väärtus2));
 									logifail.flush();
 									score.set(points);
@@ -362,7 +363,7 @@ public class KlikkimisMäng2 extends Application {
 								public void handle(MouseEvent me) {
 									points+=50;
 									//points+=väärtus3;
-									//mängija1.setPunktid(points);
+									mängija.setPunktid(points);
 									logifail.println(String.valueOf(väärtus3));
 									logifail.flush();
 									score.set(points);
@@ -484,7 +485,7 @@ public class KlikkimisMäng2 extends Application {
 					Label label = new Label("Sinu tulemus on "+String.valueOf(points)+" punkti.");
 					if (points > Integer.parseInt(edetabel.get(1)[9])){
 						label.setText("Sinu tulemus "+String.valueOf(points)+" punkti on salvestatud edetabelisse!");
-						Edetabel.lisaTabelisse(nimi, points, edetabel);
+						Edetabel.lisaTabelisse(mängija, edetabel);
 						skoorifail.print(edetabel.get(0)[0]);
 						for (int i = 1; i < edetabel.get(0).length; i++){
 							skoorifail.print(";" + edetabel.get(0)[i]);
