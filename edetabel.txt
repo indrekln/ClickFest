@@ -1,0 +1,2 @@
+Shannon;Turing;Hawking;Gates;Jobs;Wozniak;Musk;Page;Zuckrbrg;Ilves
+1000;950;900;850;800;750;700;650;600;550
