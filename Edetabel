@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Edetabel {
 
-	//private String failinimi;
+	//vajalikud edetabeli faili lähtestamiseks
 	private static String[] nimed = {"Shannon", "Turing", "Hawking", "Gates", "Jobs", "Wozniak", "Musk", "Page", "Zuckrbrg", "Ilves"};
 	private static String[] punktid = {"1000", "950", "900", "850", "800", "750", "700", "650", "600", "550"};
 
@@ -83,11 +83,11 @@ public class Edetabel {
 	}
 	
 	//lisab tabelisse mängija andmed ning tagastab tabeli
-	public static ArrayList<String[]> lisaTabelisse(String nimiM, int punktidM, ArrayList<String[]> edetabel) {
+	public static ArrayList<String[]> lisaTabelisse(Mängija mängija, ArrayList<String[]> edetabel) {
 		String[] nimed = edetabel.get(0);
 		String[] punktid = edetabel.get(1);
-//		int punktidM = mängija.getPunktid();
-//		String nimiM = mängija.getNimi();
+		int punktidM = mängija.getPunktid();
+		String nimiM = mängija.getNimi();
 		int tabeliPunkt = Integer.parseInt(punktid[0]);
 		int koht = 0;
 		while (tabeliPunkt > punktidM){
