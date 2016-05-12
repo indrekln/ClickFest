@@ -128,7 +128,7 @@ public class KlikkimisMäng2 extends Application {
 		Stage start = new Stage();
 		start.setTitle("Start ClickFest");
 		TextField tekst = new TextField();
-		tekst.setText("Sisesta siia oma nimi (max 8 tähte!)");
+		tekst.setText("Sisesta siia oma nimi (max 8 tähte!) ja vajuta ENTER");
 
 		Text juhend = new Text("Mängu juhend:\n"
 				+ "Mängus on kolm palli, iga pall annab hiirega klikates teatud arvu puhkte (punktisumma on nähtav hiirega peale minnes).\n"
@@ -149,8 +149,8 @@ public class KlikkimisMäng2 extends Application {
 						} else {
 							//Skooride faili mängija nime sisestamine
 							nimi = String.valueOf(tekst.getText());
-							//mängija1.setNimi(nimi);
-							//mängija1.setPunktid(points);
+							mängija1.setNimi(nimi);
+							mängija1.setPunktid(points);
 
 							//Kui nimi korrektselt sisestatud, avaneb teine (mängu)aken ja esimene aken on peidus
 							start.hide();
