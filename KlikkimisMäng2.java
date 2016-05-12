@@ -142,15 +142,15 @@ public class KlikkimisMäng2 extends Application {
 			tekst.setOnKeyPressed(new EventHandler<KeyEvent>() {
 				public void handle(KeyEvent event) {
 					if(event.getCode() == KeyCode.ENTER) {
-						if (tekst.getText().length()<1 || tekst.getText().length()>8 || tekst.getText().equals("Sisesta siia oma nimi"))  {
+						if (tekst.getText().length()<1 || tekst.getText().length()>8)  {
 							NimeErind e = new NimeErind("Nimi on ebakorrektselt sisestatud!");
 							tekst.setText("Palun sisesta nimi korrektselt!");
 							throw e;
 						} else {
 							//Skooride faili mängija nime sisestamine
 							nimi = String.valueOf(tekst.getText());
-							mängija1.setNimi(nimi);
-							mängija1.setPunktid(points);
+							//mängija1.setNimi(nimi);
+							//mängija1.setPunktid(points);
 
 							//Kui nimi korrektselt sisestatud, avaneb teine (mängu)aken ja esimene aken on peidus
 							start.hide();
